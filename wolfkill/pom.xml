@@ -11,10 +11,17 @@
 
     <artifactId>wolfkill</artifactId>
     <packaging>pom</packaging>
+    <version>${version}</version>
+
+    <properties>
+        <version>1.0</version>
+        <netty.v>4.1.12.Final</netty.v>
+    </properties>
 
     <modules>
         <module>wolfkill-server</module>
         <module>wolfkill-client</module>
+        <module>wolfkill-common</module>
     </modules>
 
 </project>

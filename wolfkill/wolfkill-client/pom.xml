@@ -5,11 +5,24 @@
     <parent>
         <artifactId>wolfkill</artifactId>
         <groupId>github.and777.game</groupId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>wolfkill-client</artifactId>
+    <version>${version}</version>
 
+    <dependencies>
+        <dependency>
+            <groupId>github.and777.game</groupId>
+            <artifactId>wolfkill-common</artifactId>
+            <version>${version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
+            <version>${netty.v}</version>
+        </dependency>
+    </dependencies>
 
 </project>
