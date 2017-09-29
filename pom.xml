@@ -11,7 +11,7 @@
 
     <modules>
         <module>lwjgl-sample</module>
-        <module>wolfkill-cmd</module>
+        <module>wolfkill</module>
     </modules>
 
     <properties>
