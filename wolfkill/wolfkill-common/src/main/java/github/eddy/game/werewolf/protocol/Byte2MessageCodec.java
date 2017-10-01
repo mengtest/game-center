@@ -1,6 +1,5 @@
 package github.eddy.game.werewolf.protocol;
 
-import com.alibaba.fastjson.JSON;
 import github.eddy.game.werewolf.message.Message;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
@@ -11,15 +10,26 @@ public class Byte2MessageCodec extends ByteToMessageCodec<Message> {
 
   @Override
   protected void encode(ChannelHandlerContext ctx, Message msg, ByteBuf out) throws Exception {
-    String jsonString = JSON.toJSONString(msg);
-    out.writeBytes(jsonString.getBytes());
+    out.writeLong(msg.getUserId())
+        .writeInt(msg.getLength())
+        .writeShort(msg.getVersion())
+        .writeShort(msg.getType().getCode())
+        .writeShort(msg.getAction().getCode())
+        .writeShort(msg.getService().getCode())
+        .writeBytes(msg.getContent());
   }
 
   @Override
   protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
-    byte[] bytes = new byte[in.readableBytes()];
-    in.readBytes(bytes);
-    Message message = JSON.parseObject(new String(bytes), Message.class);
-    out.add(message);
+    out.add(
+        new Message(
+            in.readLong(),
+            in.readInt(),
+            in.readShort(),
+            in.readShort(),
+            in.readShort(),
+            in.readShort(),
+            in.readBytes(in.readableBytes()))
+    );
   }
 }
