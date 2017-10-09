@@ -7,7 +7,11 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public enum ActionCode {
+  DEFAULT(-1),
+  TIMER(1), //测试用
+  CHAT(21), WHISPER(22),//聊天
   ;
+
   int code;
 
   public static ActionCode transform(int codeValue) {

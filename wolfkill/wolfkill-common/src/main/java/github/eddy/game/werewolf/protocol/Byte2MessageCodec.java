@@ -10,8 +10,8 @@ public class Byte2MessageCodec extends ByteToMessageCodec<Message> {
 
   @Override
   protected void encode(ChannelHandlerContext ctx, Message msg, ByteBuf out) throws Exception {
-    out.writeLong(msg.getUserId())
-        .writeInt(msg.getLength())
+    out.writeInt(msg.getLength())
+        .writeLong(msg.getUserId())
         .writeShort(msg.getVersion())
         .writeShort(msg.getType().getCode())
         .writeShort(msg.getAction().getCode())
@@ -23,8 +23,8 @@ public class Byte2MessageCodec extends ByteToMessageCodec<Message> {
   protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
     out.add(
         new Message(
-            in.readLong(),
             in.readInt(),
+            in.readLong(),
             in.readShort(),
             in.readShort(),
             in.readShort(),

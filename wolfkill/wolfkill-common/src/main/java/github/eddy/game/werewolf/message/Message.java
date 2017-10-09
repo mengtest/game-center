@@ -1,10 +1,13 @@
 package github.eddy.game.werewolf.message;
 
+import static github.eddy.game.werewolf.common.Version.SERVER_USERID;
+
 import github.eddy.game.werewolf.common.ActionCode;
 import github.eddy.game.werewolf.common.ServiceCode;
 import github.eddy.game.werewolf.common.TypeCode;
 import github.eddy.game.werewolf.common.Version;
 import io.netty.buffer.ByteBuf;
+import io.netty.channel.Channel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,8 +18,9 @@ import lombok.Setter;
 @Setter
 public class Message {
 
-  long userId;//8 由谁发送
   int length;//4 Message长度
+
+  long userId;//8 由谁发送
   short version = Version.CURRENT_VERSION;//2 版本号
 
   TypeCode type;//2 消息类型
@@ -25,8 +29,14 @@ public class Message {
 
   ByteBuf content;//消息体
 
-  public Message(long userId,
-      TypeCode type, ActionCode action, ServiceCode service, ByteBuf content) {
+  public Message(TypeCode type, ActionCode action, ServiceCode service,
+      ByteBuf content) {
+    this(SERVER_USERID, type, action, service, content);
+  }
+
+
+  public Message(long userId, TypeCode type, ActionCode action, ServiceCode service,
+      ByteBuf content) {
     this.length = 20 + content.readableBytes();
 
     this.userId = userId;
@@ -36,14 +46,20 @@ public class Message {
     this.content = content;
   }
 
-  public Message(long userId, int length, short version,
+  public Message(int length, long userId, short version,
       short type, short action, short service, ByteBuf content) {
-    this.userId = userId;
     this.length = length;
+    this.userId = userId;
     this.version = version;
     this.type = TypeCode.transform(type);
     this.action = ActionCode.transform(action);
     this.service = ServiceCode.transform(service);
     this.content = content;
+  }
+
+  public Message copyMessage(Channel channel) {
+    ByteBuf byteBuf = channel.alloc().buffer(content.writableBytes());
+    byteBuf.writeBytes(content);
+    return new Message(userId, type, action, service, byteBuf);
   }
 }

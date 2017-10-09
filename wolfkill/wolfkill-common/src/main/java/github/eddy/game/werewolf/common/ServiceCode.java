@@ -7,7 +7,11 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public enum ServiceCode {
+  DEFAULT(-1),
+  TIMER_START(11),TIMER_END(12),
+  HALL_CHAT(21), ROOM_CHAT(22),//聊天消息发送对象
   ;
+
   int code;
 
   public static ServiceCode transform(int codeValue) {
@@ -16,6 +20,6 @@ public enum ServiceCode {
         return type;
       }
     }
-    throw new ServerException("枚举值转换失败");
+    throw new ServerException("枚举值转换失败:"+codeValue);
   }
 }

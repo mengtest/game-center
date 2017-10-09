@@ -5,5 +5,6 @@ package github.eddy.game.werewolf.common;
  */
 public interface Version {
 
+  long SERVER_USERID = 0L;
   short CURRENT_VERSION = 0;
 }
