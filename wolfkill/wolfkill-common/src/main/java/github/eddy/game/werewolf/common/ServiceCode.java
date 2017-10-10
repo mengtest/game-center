@@ -8,8 +8,9 @@ import lombok.Getter;
 @Getter
 public enum ServiceCode {
   DEFAULT(-1),
-  TIMER_START(11),TIMER_END(12),
-  HALL_CHAT(21), ROOM_CHAT(22),//聊天消息发送对象
+  TIMER_START(11), TIMER_END(12),
+  USER_LOGIN(21), USER_LOGOUT(22), ROOM_IN(23), ROOM_OUT(24),//用户相关
+  HALL_CHAT(31), ROOM_CHAT(32),//聊天消息发送对象
   ;
 
   int code;
@@ -20,6 +21,6 @@ public enum ServiceCode {
         return type;
       }
     }
-    throw new ServerException("枚举值转换失败:"+codeValue);
+    throw new ServerException("枚举值转换失败:" + codeValue);
   }
 }

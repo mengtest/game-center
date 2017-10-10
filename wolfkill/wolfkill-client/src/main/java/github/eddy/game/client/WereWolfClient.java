@@ -16,6 +16,7 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.Date;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -24,8 +25,8 @@ public class WereWolfClient {
   private final String host;
   private final Integer port;
   private final Integer userId;
-
-  Boolean stop = false;
+  @Getter
+  private Channel localChannel;
 
   public WereWolfClient(String host, Integer port, Integer userId) {
     this.host = host;
@@ -42,17 +43,7 @@ public class WereWolfClient {
           .handler(new ClientChannelInitializer());
 
       ChannelFuture f = b.connect(host, port).sync();
-
-      Channel channel = f.channel();
-      BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-      while (!stop) {
-        ByteBuf byteBuf = channel.alloc().buffer();
-        byteBuf.writeCharSequence(in.readLine(), Charsets.UTF_8);
-        Message message = new Message(userId, TypeCode.REQUEST, ActionCode.CHAT,
-            ServiceCode.HALL_CHAT,
-            byteBuf);
-        channel.writeAndFlush(message);
-      }
+      localChannel = f.channel();
       f.channel().closeFuture().sync();
     } catch (Exception e) {
       log.error("", e);
@@ -63,7 +54,21 @@ public class WereWolfClient {
 
   public static void main(String[] args) throws Exception {
     Integer userId = Long.valueOf(new Date().getTime()).intValue();
-    new WereWolfClient("localhost", 65535, userId).start();
+
+    WereWolfClient client = new WereWolfClient("localhost", 65535, userId);
+    client.start();
+
+    Channel channel = client.getLocalChannel();
+    BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+    Boolean stop = false;
+    while (!stop) {
+      ByteBuf byteBuf = channel.alloc().buffer();
+      byteBuf.writeCharSequence(in.readLine(), Charsets.UTF_8);
+      Message message = new Message(userId, TypeCode.REQUEST, ActionCode.CHAT,
+          ServiceCode.HALL_CHAT,
+          byteBuf);
+      channel.writeAndFlush(message);
+    }
   }
 }
 

@@ -8,8 +8,9 @@ import lombok.Getter;
 @Getter
 public enum ActionCode {
   DEFAULT(-1),
-  TIMER(1), //测试用
-  CHAT(21), WHISPER(22),//聊天
+  TIMER(1),//时钟计时
+  USER(2),//登录相关
+  CHAT(11), WHISPER(12),//聊天
   ;
 
   int code;
