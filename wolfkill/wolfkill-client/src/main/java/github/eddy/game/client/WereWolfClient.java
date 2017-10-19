@@ -15,7 +15,6 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.Date;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -53,7 +52,7 @@ public class WereWolfClient {
   }
 
   public static void main(String[] args) throws Exception {
-    Integer userId = Long.valueOf(new Date().getTime()).intValue();
+    Integer userId = Math.toIntExact(System.currentTimeMillis());
 
     WereWolfClient client = new WereWolfClient("localhost", 65535, userId);
     client.start();

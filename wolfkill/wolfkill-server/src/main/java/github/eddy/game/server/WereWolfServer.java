@@ -27,11 +27,11 @@ public class WereWolfServer {
     EventLoopGroup workerGroup = new NioEventLoopGroup();
 
     try {
+
       ServerBootstrap b = new ServerBootstrap()
           .group(bossGroup, workerGroup)
           .channel(NioServerSocketChannel.class)
-          .childHandler(
-              new ServerChannelInitializer())//使用initializer来配置新加入的channel ,包括handler等配置
+          .childHandler(new ServerChannelInitializer())//使用initializer来配置新加入的channel ,包括handler等配置
           .option(ChannelOption.SO_BACKLOG, 128)//TCP相关的参数
           .childOption(ChannelOption.SO_KEEPALIVE, true);
 
