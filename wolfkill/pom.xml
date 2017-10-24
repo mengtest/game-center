@@ -16,6 +16,7 @@
     <properties>
         <version>1.0</version>
         <netty.v>4.1.12.Final</netty.v>
+        <rain-mn.v>0.0.1</rain-mn.v>
     </properties>
 
     <modules>

@@ -18,6 +18,13 @@
             <artifactId>wolfkill-common</artifactId>
             <version>${version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>github.eddy.game</groupId>
+            <artifactId>rain-midnight</artifactId>
+            <version>${rain-mn.v}</version>
+        </dependency>
+
         <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-all</artifactId>
