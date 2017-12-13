@@ -7,7 +7,7 @@ import github.eddy.game.common.MsgModuleCode;
 import github.eddy.game.common.MsgServiceCode;
 import github.eddy.game.common.MsgTypeCode;
 import github.eddy.game.protocol.Message;
-import github.eddy.werewolf.client.handler.ClientTypeHandler;
+import github.eddy.werewolf.client.handler.ClientHandler;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
 import java.io.BufferedReader;
@@ -24,7 +24,7 @@ public class WereWolfClient {
   public void start() throws Exception {
     client = new RainClient(DEFAULT_HOST, DEFAULT_PORT);
     ClientChannelInitializer clientChannelInitializer = new ClientChannelInitializer();
-    clientChannelInitializer.registerMessageHandler(ClientTypeHandler.class);
+    clientChannelInitializer.registerMessageHandler(ClientHandler.class);
     client.start(clientChannelInitializer);
   }
 

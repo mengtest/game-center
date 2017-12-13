@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Sharable
-public class ClientTypeHandler extends AbstractMessageHandler {
+public class ClientHandler extends AbstractMessageHandler {
 
   private ActionHandler actionHandler = ActionHandler.getActionHandler();
 

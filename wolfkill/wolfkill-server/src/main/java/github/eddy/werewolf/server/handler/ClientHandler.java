@@ -1,6 +1,6 @@
 package github.eddy.werewolf.server.handler;
 
-import static github.eddy.game.common.MsgTypeEnum.REQUEST;
+import static github.eddy.game.common.MsgTypeCode.REQUEST;
 
 import github.eddy.game.protocol.AbstractMessageHandler;
 import io.netty.channel.Channel;
@@ -8,7 +8,7 @@ import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class TypeHandler extends AbstractMessageHandler {
+public class ClientHandler extends AbstractMessageHandler {
 
   private ModuleHandler moduleHandler = ModuleHandler.getModuleHandler();
 

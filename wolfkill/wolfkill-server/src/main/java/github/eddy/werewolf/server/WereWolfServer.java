@@ -2,7 +2,7 @@ package github.eddy.werewolf.server;
 
 import github.eddy.game.server.RainServer;
 import github.eddy.game.server.handler.ServerChannelInitializer;
-import github.eddy.werewolf.server.handler.TypeHandler;
+import github.eddy.werewolf.server.handler.ClientHandler;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -17,7 +17,7 @@ public class WereWolfServer {
   public void start() throws Exception {
     this.server = new RainServer(DEFAULT_PORT);
     ServerChannelInitializer serverChannelInitializer = new ServerChannelInitializer();
-    serverChannelInitializer.registerMessageHandler(TypeHandler.class);
+    serverChannelInitializer.registerMessageHandler(ClientHandler.class);
     server.start(serverChannelInitializer);
   }
 
