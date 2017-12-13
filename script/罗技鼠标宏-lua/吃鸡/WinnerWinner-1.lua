@@ -8,7 +8,7 @@ SCREE_W = 1920 --分辨率 长
 SCREE_L = 1080 --分辨率 宽
 DPI = 1400 --dpi设置
 
-TIME_SPACE = 30 --压枪间隔时间ms
+TIME_SPACE = 80 --压枪间隔时间ms
 SHIFT_RATE_Y = 0.8 --屏息Y轴修正
 
 --[[通过 鼠标速度/屏幕分辨率 换算压枪速率]]
@@ -100,7 +100,6 @@ function RoutePressedMouse(arg)
     elseif (arg == 8) then
         Reset(BUTTON_FUNCTION[4])
     elseif (arg == 1) then
-        isOnClick = not IsOnClick
         if (not (currentGun == "" or IsModifierPressed("alt"))) then
             Boom() --压枪开枪
         end
@@ -154,6 +153,7 @@ function Boom()
     shotTime = 0 --持续时间
     offsetX = 0 --X偏移量
     offsetY = 0 --Y偏移量
+    IsOnClick = true --持續開火
 
     repeat
         if (not IsMouseButtonPressed(1)) then
@@ -162,22 +162,22 @@ function Boom()
 
         --随时间变化偏移改变
         if shotTime > 1840 then
-            offsetY = currentBoomData[index][0] * ADJUST_RATE_Y
+            offsetY = currentBoomData[0] * ADJUST_RATE_Y
         elseif shotTime > 1600 then
-            offsetY = currentBoomData[index][1] * ADJUST_RATE_Y
+            offsetY = currentBoomData[1] * ADJUST_RATE_Y
         elseif shotTime > 1400 then
-            offsetY = currentBoomData[index][2] * ADJUST_RATE_Y
+            offsetY = currentBoomData[2] * ADJUST_RATE_Y
         elseif shotTime > 1000 then
-            offsetY = currentBoomData[index][3] * ADJUST_RATE_Y
+            offsetY = currentBoomData[3] * ADJUST_RATE_Y
         elseif shotTime > 680 then
-            offsetY = currentBoomData[index][4] * ADJUST_RATE_Y
+            offsetY = currentBoomData[4] * ADJUST_RATE_Y
         elseif shotTime < 680 then
-            offsetY = currentBoomData[index][5] * ADJUST_RATE_Y
+            offsetY = currentBoomData[5] * ADJUST_RATE_Y
         end
 
         --shift屏息降低20%偏移
         if (IsModifierPressed("shift")) then
-            offsetY = offsetY * SHIFT_RATE
+            offsetY = offsetY * SHIFT_RATE_Y
         end
 
         OutputLogMessage("get offset=%i\n", offsetY)
